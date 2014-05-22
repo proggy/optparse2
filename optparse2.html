@@ -1,0 +1,433 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: package optparse2</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>optparse2</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/djung/lib/optparse2/__init__.py">/home/djung/lib/optparse2/__init__.py</a></font></td></tr></table>
+    <p><tt>Extend&nbsp;the&nbsp;command&nbsp;line&nbsp;option&nbsp;parser&nbsp;from&nbsp;the&nbsp;module&nbsp;"optparse",&nbsp;which&nbsp;was<br>
+originally&nbsp;written&nbsp;by&nbsp;Gregory&nbsp;P.&nbsp;Ward.<br>
+&nbsp;<br>
+The&nbsp;most&nbsp;important&nbsp;changes&nbsp;are:<br>
+--&gt;&nbsp;information&nbsp;about&nbsp;the&nbsp;default&nbsp;values&nbsp;is&nbsp;automatically&nbsp;appended&nbsp;to&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;help&nbsp;strings&nbsp;of&nbsp;each&nbsp;option&nbsp;(if&nbsp;they&nbsp;do&nbsp;not&nbsp;already&nbsp;include&nbsp;the&nbsp;word<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"%default")<br>
+--&gt;&nbsp;options&nbsp;and&nbsp;option&nbsp;groups&nbsp;are&nbsp;displayed&nbsp;in&nbsp;alphabetical&nbsp;order&nbsp;on&nbsp;the&nbsp;help<br>
+&nbsp;&nbsp;&nbsp;&nbsp;page<br>
+--&gt;&nbsp;option&nbsp;string&nbsp;conflicts&nbsp;may&nbsp;not&nbsp;necessarily&nbsp;lead&nbsp;to&nbsp;an&nbsp;exception.&nbsp;First&nbsp;it<br>
+&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;tried&nbsp;to&nbsp;move&nbsp;the&nbsp;option&nbsp;string&nbsp;to&nbsp;the&nbsp;new&nbsp;option&nbsp;(give&nbsp;it&nbsp;a&nbsp;new<br>
+&nbsp;&nbsp;&nbsp;&nbsp;meaning),&nbsp;as&nbsp;long&nbsp;as&nbsp;at&nbsp;least&nbsp;one&nbsp;option&nbsp;string&nbsp;remains&nbsp;at&nbsp;the&nbsp;old&nbsp;option<br>
+--&gt;&nbsp;pydoc.pager&nbsp;is&nbsp;now&nbsp;used&nbsp;to&nbsp;display&nbsp;the&nbsp;help&nbsp;(similar&nbsp;behavior&nbsp;to&nbsp;the&nbsp;bash<br>
+&nbsp;&nbsp;&nbsp;&nbsp;command&nbsp;"less")<br>
+--&gt;&nbsp;by&nbsp;default,&nbsp;the&nbsp;"help"&nbsp;and&nbsp;"version"&nbsp;options&nbsp;are&nbsp;moved&nbsp;to&nbsp;an&nbsp;option&nbsp;group<br>
+&nbsp;&nbsp;&nbsp;&nbsp;called&nbsp;"General&nbsp;options"<br>
+--&gt;&nbsp;the&nbsp;"help"&nbsp;option&nbsp;does&nbsp;no&nbsp;longer&nbsp;have&nbsp;the&nbsp;short&nbsp;option&nbsp;string&nbsp;"-h",&nbsp;but<br>
+&nbsp;&nbsp;&nbsp;&nbsp;instead&nbsp;"-?"<br>
+--&gt;&nbsp;write&nbsp;"None"&nbsp;instead&nbsp;of&nbsp;"none"&nbsp;in&nbsp;default&nbsp;option&nbsp;value&nbsp;help&nbsp;string<br>
+--&gt;&nbsp;preserve&nbsp;linebreaks&nbsp;in&nbsp;description&nbsp;(could&nbsp;still&nbsp;be&nbsp;improved)<br>
+&nbsp;<br>
+To&nbsp;do:<br>
+--&gt;&nbsp;only&nbsp;use&nbsp;pydoc.pager&nbsp;for&nbsp;showing&nbsp;help&nbsp;if&nbsp;the&nbsp;length&nbsp;of&nbsp;the&nbsp;help&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;exceeding&nbsp;the&nbsp;terminal&nbsp;window&nbsp;height</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Package Contents</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="optparse.html#IndentedHelpFormatter">optparse.IndentedHelpFormatter</a>(<a href="optparse.html#HelpFormatter">optparse.HelpFormatter</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="optparse2.html#IndentedHelpFormatterWithNL">IndentedHelpFormatterWithNL</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="optparse.html#OptionContainer">optparse.OptionContainer</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="optparse2.html#OptionContainer">OptionContainer</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="optparse2.html#OptionGroup">OptionGroup</a>(<a href="optparse.html#OptionGroup">optparse.OptionGroup</a>, <a href="optparse2.html#OptionContainer">OptionContainer</a>)
+</font></dt><dt><font face="helvetica, arial"><a href="optparse2.html#OptionParser">OptionParser</a>(<a href="optparse.html#OptionParser">optparse.OptionParser</a>, <a href="optparse2.html#OptionContainer">OptionContainer</a>)
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="optparse.html#OptionGroup">optparse.OptionGroup</a>(<a href="optparse.html#OptionContainer">optparse.OptionContainer</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="optparse2.html#OptionGroup">OptionGroup</a>(<a href="optparse.html#OptionGroup">optparse.OptionGroup</a>, <a href="optparse2.html#OptionContainer">OptionContainer</a>)
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="optparse.html#OptionParser">optparse.OptionParser</a>(<a href="optparse.html#OptionContainer">optparse.OptionContainer</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="optparse2.html#OptionParser">OptionParser</a>(<a href="optparse.html#OptionParser">optparse.OptionParser</a>, <a href="optparse2.html#OptionContainer">OptionContainer</a>)
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="IndentedHelpFormatterWithNL">class <strong>IndentedHelpFormatterWithNL</strong></a>(<a href="optparse.html#IndentedHelpFormatter">optparse.IndentedHelpFormatter</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>#&nbsp;solve&nbsp;the&nbsp;problem&nbsp;that&nbsp;newline&nbsp;characters&nbsp;are&nbsp;erased&nbsp;in&nbsp;the&nbsp;docstring<br>
+#&nbsp;courtesy&nbsp;to&nbsp;Tim&nbsp;Chase<br>
+#&nbsp;https://groups.google.com/forum/?fromgroups#!topic/comp.lang.python/<br>
+#&nbsp;bfbmtUGhW8I<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="optparse2.html#IndentedHelpFormatterWithNL">IndentedHelpFormatterWithNL</a></dd>
+<dd><a href="optparse.html#IndentedHelpFormatter">optparse.IndentedHelpFormatter</a></dd>
+<dd><a href="optparse.html#HelpFormatter">optparse.HelpFormatter</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="IndentedHelpFormatterWithNL-format_description"><strong>format_description</strong></a>(self, description)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-format_option"><strong>format_option</strong></a>(self, option)</dt></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>NO_DEFAULT_VALUE</strong> = 'None'</dl>
+
+<dl><dt><strong>__created__</strong> = '2013-02-06'</dl>
+
+<dl><dt><strong>__modified__</strong> = '2013-02-06'</dl>
+
+<hr>
+Methods inherited from <a href="optparse.html#IndentedHelpFormatter">optparse.IndentedHelpFormatter</a>:<br>
+<dl><dt><a name="IndentedHelpFormatterWithNL-__init__"><strong>__init__</strong></a>(self, indent_increment<font color="#909090">=2</font>, max_help_position<font color="#909090">=24</font>, width<font color="#909090">=None</font>, short_first<font color="#909090">=1</font>)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-format_heading"><strong>format_heading</strong></a>(self, heading)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-format_usage"><strong>format_usage</strong></a>(self, usage)</dt></dl>
+
+<hr>
+Methods inherited from <a href="optparse.html#HelpFormatter">optparse.HelpFormatter</a>:<br>
+<dl><dt><a name="IndentedHelpFormatterWithNL-dedent"><strong>dedent</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-expand_default"><strong>expand_default</strong></a>(self, option)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-format_epilog"><strong>format_epilog</strong></a>(self, epilog)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-format_option_strings"><strong>format_option_strings</strong></a>(self, option)</dt><dd><tt>Return&nbsp;a&nbsp;comma-separated&nbsp;list&nbsp;of&nbsp;option&nbsp;strings&nbsp;&amp;&nbsp;metavariables.</tt></dd></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-indent"><strong>indent</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-set_long_opt_delimiter"><strong>set_long_opt_delimiter</strong></a>(self, delim)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-set_parser"><strong>set_parser</strong></a>(self, parser)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-set_short_opt_delimiter"><strong>set_short_opt_delimiter</strong></a>(self, delim)</dt></dl>
+
+<dl><dt><a name="IndentedHelpFormatterWithNL-store_option_strings"><strong>store_option_strings</strong></a>(self, parser)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="OptionContainer">class <strong>OptionContainer</strong></a>(<a href="optparse.html#OptionContainer">optparse.OptionContainer</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Extended&nbsp;version&nbsp;of&nbsp;optparse.<a href="#OptionContainer">OptionContainer</a>.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="OptionContainer-add_option"><strong>add_option</strong></a>(self, *args, **kwargs)</dt><dd><tt>Before&nbsp;calling&nbsp;the&nbsp;original&nbsp;method&nbsp;"add_option",&nbsp;this&nbsp;version&nbsp;checks<br>
+if&nbsp;the&nbsp;same&nbsp;option&nbsp;strings&nbsp;(long&nbsp;and&nbsp;short)&nbsp;do&nbsp;already&nbsp;exist&nbsp;in&nbsp;another<br>
+option&nbsp;definition.&nbsp;Instead&nbsp;of&nbsp;raising&nbsp;an&nbsp;exception&nbsp;rightaway,&nbsp;it&nbsp;tries<br>
+to&nbsp;"overwrite"&nbsp;the&nbsp;meaning&nbsp;of&nbsp;the&nbsp;option&nbsp;string,&nbsp;i.e.&nbsp;the&nbsp;option&nbsp;string<br>
+is&nbsp;deleted&nbsp;from&nbsp;the&nbsp;other&nbsp;option.&nbsp;However,&nbsp;this&nbsp;will&nbsp;only&nbsp;be&nbsp;done&nbsp;if<br>
+this&nbsp;option&nbsp;string&nbsp;is&nbsp;not&nbsp;the&nbsp;only&nbsp;one&nbsp;defined&nbsp;in&nbsp;the&nbsp;other&nbsp;option,<br>
+because&nbsp;at&nbsp;least&nbsp;one&nbsp;option&nbsp;string&nbsp;should&nbsp;persist&nbsp;for&nbsp;each&nbsp;option.</tt></dd></dl>
+
+<dl><dt><a name="OptionContainer-get_option_by_name"><strong>get_option_by_name</strong></a>(self, name)</dt><dd><tt>Get&nbsp;option&nbsp;by&nbsp;option&nbsp;name.&nbsp;A&nbsp;little&nbsp;bit&nbsp;different&nbsp;than&nbsp;"get_option",<br>
+because&nbsp;it&nbsp;first&nbsp;checks&nbsp;"dest"&nbsp;before&nbsp;trying&nbsp;the&nbsp;option&nbsp;strings,&nbsp;and<br>
+also&nbsp;does&nbsp;not&nbsp;expect&nbsp;the&nbsp;dashes&nbsp;("-"&nbsp;or&nbsp;"--")&nbsp;when&nbsp;referencing&nbsp;the<br>
+option&nbsp;strings.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="optparse.html#OptionContainer">optparse.OptionContainer</a>:<br>
+<dl><dt><a name="OptionContainer-__init__"><strong>__init__</strong></a>(self, option_class, conflict_handler, description)</dt></dl>
+
+<dl><dt><a name="OptionContainer-add_options"><strong>add_options</strong></a>(self, option_list)</dt></dl>
+
+<dl><dt><a name="OptionContainer-destroy"><strong>destroy</strong></a>(self)</dt><dd><tt>see&nbsp;<a href="#OptionParser">OptionParser</a>.<a href="#OptionContainer-destroy">destroy</a>().</tt></dd></dl>
+
+<dl><dt><a name="OptionContainer-format_description"><strong>format_description</strong></a>(self, formatter)</dt></dl>
+
+<dl><dt><a name="OptionContainer-format_help"><strong>format_help</strong></a>(self, formatter)</dt></dl>
+
+<dl><dt><a name="OptionContainer-format_option_help"><strong>format_option_help</strong></a>(self, formatter)</dt></dl>
+
+<dl><dt><a name="OptionContainer-get_description"><strong>get_description</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="OptionContainer-get_option"><strong>get_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionContainer-has_option"><strong>has_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionContainer-remove_option"><strong>remove_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionContainer-set_conflict_handler"><strong>set_conflict_handler</strong></a>(self, handler)</dt></dl>
+
+<dl><dt><a name="OptionContainer-set_description"><strong>set_description</strong></a>(self, description)</dt></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="OptionGroup">class <strong>OptionGroup</strong></a>(<a href="optparse.html#OptionGroup">optparse.OptionGroup</a>, <a href="optparse2.html#OptionContainer">OptionContainer</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Just&nbsp;make&nbsp;sure&nbsp;the&nbsp;modified&nbsp;method&nbsp;"<a href="#OptionContainer">OptionContainer</a>.add_option"&nbsp;is&nbsp;used<br>
+also&nbsp;for&nbsp;"<a href="#OptionGroup">OptionGroup</a>".<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="optparse2.html#OptionGroup">OptionGroup</a></dd>
+<dd><a href="optparse.html#OptionGroup">optparse.OptionGroup</a></dd>
+<dd><a href="optparse.html#OptionContainer">optparse.OptionContainer</a></dd>
+<dd><a href="optparse2.html#OptionContainer">OptionContainer</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="OptionGroup-add_option"><strong>add_option</strong></a>(self, *args, **kwargs)</dt><dd><tt>Before&nbsp;calling&nbsp;the&nbsp;original&nbsp;method&nbsp;"add_option",&nbsp;this&nbsp;version&nbsp;checks<br>
+if&nbsp;the&nbsp;same&nbsp;option&nbsp;strings&nbsp;(long&nbsp;and&nbsp;short)&nbsp;do&nbsp;already&nbsp;exist&nbsp;in&nbsp;another<br>
+option&nbsp;definition.&nbsp;Instead&nbsp;of&nbsp;raising&nbsp;an&nbsp;exception&nbsp;rightaway,&nbsp;it&nbsp;tries<br>
+to&nbsp;"overwrite"&nbsp;the&nbsp;meaning&nbsp;of&nbsp;the&nbsp;option&nbsp;string,&nbsp;i.e.&nbsp;the&nbsp;option&nbsp;string<br>
+is&nbsp;deleted&nbsp;from&nbsp;the&nbsp;other&nbsp;option.&nbsp;However,&nbsp;this&nbsp;will&nbsp;only&nbsp;be&nbsp;done&nbsp;if<br>
+this&nbsp;option&nbsp;string&nbsp;is&nbsp;not&nbsp;the&nbsp;only&nbsp;one&nbsp;defined&nbsp;in&nbsp;the&nbsp;other&nbsp;option,<br>
+because&nbsp;at&nbsp;least&nbsp;one&nbsp;option&nbsp;string&nbsp;should&nbsp;persist&nbsp;for&nbsp;each&nbsp;option.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="optparse.html#OptionGroup">optparse.OptionGroup</a>:<br>
+<dl><dt><a name="OptionGroup-__init__"><strong>__init__</strong></a>(self, parser, title, description<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="OptionGroup-destroy"><strong>destroy</strong></a>(self)</dt><dd><tt>see&nbsp;<a href="#OptionParser">OptionParser</a>.<a href="#OptionGroup-destroy">destroy</a>().</tt></dd></dl>
+
+<dl><dt><a name="OptionGroup-format_help"><strong>format_help</strong></a>(self, formatter)</dt></dl>
+
+<dl><dt><a name="OptionGroup-set_title"><strong>set_title</strong></a>(self, title)</dt></dl>
+
+<hr>
+Methods inherited from <a href="optparse.html#OptionContainer">optparse.OptionContainer</a>:<br>
+<dl><dt><a name="OptionGroup-add_options"><strong>add_options</strong></a>(self, option_list)</dt></dl>
+
+<dl><dt><a name="OptionGroup-format_description"><strong>format_description</strong></a>(self, formatter)</dt></dl>
+
+<dl><dt><a name="OptionGroup-format_option_help"><strong>format_option_help</strong></a>(self, formatter)</dt></dl>
+
+<dl><dt><a name="OptionGroup-get_description"><strong>get_description</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="OptionGroup-get_option"><strong>get_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionGroup-has_option"><strong>has_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionGroup-remove_option"><strong>remove_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionGroup-set_conflict_handler"><strong>set_conflict_handler</strong></a>(self, handler)</dt></dl>
+
+<dl><dt><a name="OptionGroup-set_description"><strong>set_description</strong></a>(self, description)</dt></dl>
+
+<hr>
+Methods inherited from <a href="optparse2.html#OptionContainer">OptionContainer</a>:<br>
+<dl><dt><a name="OptionGroup-get_option_by_name"><strong>get_option_by_name</strong></a>(self, name)</dt><dd><tt>Get&nbsp;option&nbsp;by&nbsp;option&nbsp;name.&nbsp;A&nbsp;little&nbsp;bit&nbsp;different&nbsp;than&nbsp;"get_option",<br>
+because&nbsp;it&nbsp;first&nbsp;checks&nbsp;"dest"&nbsp;before&nbsp;trying&nbsp;the&nbsp;option&nbsp;strings,&nbsp;and<br>
+also&nbsp;does&nbsp;not&nbsp;expect&nbsp;the&nbsp;dashes&nbsp;("-"&nbsp;or&nbsp;"--")&nbsp;when&nbsp;referencing&nbsp;the<br>
+option&nbsp;strings.</tt></dd></dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="OptionParser">class <strong>OptionParser</strong></a>(<a href="optparse.html#OptionParser">optparse.OptionParser</a>, <a href="optparse2.html#OptionContainer">OptionContainer</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>My&nbsp;improved&nbsp;version&nbsp;of&nbsp;optparse.<a href="#OptionParser">OptionParser</a>&nbsp;that&nbsp;overwrites&nbsp;some&nbsp;of&nbsp;its<br>
+methods&nbsp;and&nbsp;changes&nbsp;its&nbsp;behavior&nbsp;a&nbsp;little&nbsp;bit.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="optparse2.html#OptionParser">OptionParser</a></dd>
+<dd><a href="optparse.html#OptionParser">optparse.OptionParser</a></dd>
+<dd><a href="optparse.html#OptionContainer">optparse.OptionContainer</a></dd>
+<dd><a href="optparse2.html#OptionContainer">OptionContainer</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="OptionParser-__init__"><strong>__init__</strong></a>(self, *args, **kwargs)</dt><dd><tt>My&nbsp;version&nbsp;of&nbsp;the&nbsp;constructor.&nbsp;Sets&nbsp;the&nbsp;version&nbsp;string&nbsp;if&nbsp;the&nbsp;user<br>
+hasn't&nbsp;done&nbsp;that&nbsp;himself,&nbsp;because&nbsp;an&nbsp;empty&nbsp;version&nbsp;string&nbsp;would&nbsp;lead&nbsp;to<br>
+a&nbsp;bug&nbsp;lateron.&nbsp;&nbsp;If&nbsp;the&nbsp;keyword&nbsp;argument&nbsp;"general"&nbsp;is&nbsp;set&nbsp;to&nbsp;True,&nbsp;move<br>
+help&nbsp;and&nbsp;version&nbsp;options&nbsp;to&nbsp;the&nbsp;newly&nbsp;created&nbsp;option&nbsp;group&nbsp;"General<br>
+options"&nbsp;(default:&nbsp;True).</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-add_all_default_values"><strong>add_all_default_values</strong></a>(self)</dt><dd><tt>Automatically&nbsp;append&nbsp;the&nbsp;default&nbsp;values&nbsp;to&nbsp;the&nbsp;help&nbsp;strings&nbsp;of&nbsp;all<br>
+the&nbsp;options&nbsp;of&nbsp;this&nbsp;option&nbsp;parser.&nbsp;Those&nbsp;options&nbsp;that&nbsp;already&nbsp;contain<br>
+the&nbsp;substring&nbsp;"%default"&nbsp;are&nbsp;skipped.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-add_option"><strong>add_option</strong></a>(self, *args, **kwargs)</dt><dd><tt>Before&nbsp;calling&nbsp;the&nbsp;original&nbsp;method&nbsp;"add_option",&nbsp;this&nbsp;version&nbsp;checks<br>
+if&nbsp;the&nbsp;same&nbsp;option&nbsp;strings&nbsp;(long&nbsp;and&nbsp;short)&nbsp;do&nbsp;already&nbsp;exist&nbsp;in&nbsp;another<br>
+option&nbsp;definition.&nbsp;Instead&nbsp;of&nbsp;raising&nbsp;an&nbsp;exception&nbsp;rightaway,&nbsp;it&nbsp;tries<br>
+to&nbsp;"overwrite"&nbsp;the&nbsp;meaning&nbsp;of&nbsp;the&nbsp;option&nbsp;string,&nbsp;i.e.&nbsp;the&nbsp;option&nbsp;string<br>
+is&nbsp;deleted&nbsp;from&nbsp;the&nbsp;other&nbsp;option.&nbsp;However,&nbsp;this&nbsp;will&nbsp;only&nbsp;be&nbsp;done&nbsp;if<br>
+this&nbsp;option&nbsp;string&nbsp;is&nbsp;not&nbsp;the&nbsp;only&nbsp;one&nbsp;defined&nbsp;in&nbsp;the&nbsp;other&nbsp;option,<br>
+because&nbsp;at&nbsp;least&nbsp;one&nbsp;option&nbsp;string&nbsp;should&nbsp;persist&nbsp;for&nbsp;each&nbsp;option.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-cmp_opts"><strong>cmp_opts</strong></a>(self, a, b)</dt><dd><tt>Compare&nbsp;options&nbsp;by&nbsp;first&nbsp;short&nbsp;option&nbsp;name&nbsp;or,&nbsp;if&nbsp;there&nbsp;is&nbsp;not&nbsp;short<br>
+option&nbsp;name,&nbsp;by&nbsp;first&nbsp;long&nbsp;option&nbsp;name.&nbsp;Needed&nbsp;for&nbsp;sorting&nbsp;the<br>
+options.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-get_option_group_by_title"><strong>get_option_group_by_title</strong></a>(self, title)</dt><dd><tt>Get&nbsp;option&nbsp;group&nbsp;by&nbsp;group&nbsp;title.&nbsp;It&nbsp;is&nbsp;sufficient&nbsp;if&nbsp;the&nbsp;group&nbsp;title<br>
+is&nbsp;starting&nbsp;with&nbsp;the&nbsp;given&nbsp;string.&nbsp;All&nbsp;strings&nbsp;are&nbsp;converted&nbsp;to&nbsp;lower<br>
+case&nbsp;before&nbsp;comparison.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-move_option"><strong>move_option</strong></a>(self, name, destination, source<font color="#909090">=None</font>)</dt><dd><tt>Move&nbsp;an&nbsp;already&nbsp;defined&nbsp;option&nbsp;from&nbsp;one&nbsp;option&nbsp;parser&nbsp;object&nbsp;to<br>
+another.&nbsp;&nbsp;By&nbsp;default,&nbsp;the&nbsp;source&nbsp;object&nbsp;is&nbsp;the&nbsp;option&nbsp;parser&nbsp;object<br>
+itself,&nbsp;but&nbsp;can&nbsp;also&nbsp;be&nbsp;set&nbsp;to&nbsp;any&nbsp;option&nbsp;group&nbsp;object.&nbsp;Also&nbsp;the<br>
+destination&nbsp;can&nbsp;be&nbsp;any&nbsp;option&nbsp;parser&nbsp;or&nbsp;option&nbsp;group&nbsp;object.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-parse_args"><strong>parse_args</strong></a>(self, args<font color="#909090">=None</font>, values<font color="#909090">=None</font>)</dt><dd><tt>Does&nbsp;a&nbsp;little&nbsp;bit&nbsp;of&nbsp;extra&nbsp;stuff&nbsp;before&nbsp;calling&nbsp;the&nbsp;original&nbsp;method<br>
+"parse_args".</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-print_help"><strong>print_help</strong></a>(self, file<font color="#909090">=None</font>)</dt><dd><tt>Like&nbsp;the&nbsp;old&nbsp;one,&nbsp;except&nbsp;uses&nbsp;pydoc.pager&nbsp;to&nbsp;show&nbsp;the&nbsp;help&nbsp;on&nbsp;the<br>
+screen.&nbsp;The&nbsp;file&nbsp;argument&nbsp;no&nbsp;longer&nbsp;has&nbsp;any&nbsp;meaning,&nbsp;it&nbsp;just&nbsp;stays&nbsp;for<br>
+compatibility&nbsp;reasons.&nbsp;Also,&nbsp;the&nbsp;method&nbsp;now&nbsp;sorts&nbsp;all&nbsp;options&nbsp;and<br>
+option&nbsp;groups&nbsp;before&nbsp;displaying&nbsp;the&nbsp;help.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-search_option"><strong>search_option</strong></a>(self, name)</dt><dd><tt>Search&nbsp;the&nbsp;whole&nbsp;option&nbsp;parser&nbsp;recursively&nbsp;(also&nbsp;in&nbsp;option&nbsp;groups)<br>
+for&nbsp;an&nbsp;option&nbsp;by&nbsp;the&nbsp;given&nbsp;name.&nbsp;If&nbsp;no&nbsp;matching&nbsp;option&nbsp;is&nbsp;found,&nbsp;return<br>
+False.&nbsp;&nbsp;Otherwise,&nbsp;return&nbsp;reference&nbsp;to&nbsp;the&nbsp;option&nbsp;object.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-walk"><strong>walk</strong></a>(self)</dt><dd><tt>Return&nbsp;iterator&nbsp;over&nbsp;all&nbsp;options&nbsp;of&nbsp;the&nbsp;option&nbsp;parser,&nbsp;including<br>
+those&nbsp;in&nbsp;option&nbsp;groups.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="optparse.html#OptionParser">optparse.OptionParser</a>:<br>
+<dl><dt><a name="OptionParser-add_option_group"><strong>add_option_group</strong></a>(self, *args, **kwargs)</dt></dl>
+
+<dl><dt><a name="OptionParser-check_values"><strong>check_values</strong></a>(self, values, args)</dt><dd><tt><a href="#OptionParser-check_values">check_values</a>(values&nbsp;:&nbsp;Values,&nbsp;args&nbsp;:&nbsp;[string])<br>
+-&gt;&nbsp;(values&nbsp;:&nbsp;Values,&nbsp;args&nbsp;:&nbsp;[string])<br>
+&nbsp;<br>
+Check&nbsp;that&nbsp;the&nbsp;supplied&nbsp;option&nbsp;values&nbsp;and&nbsp;leftover&nbsp;arguments&nbsp;are<br>
+valid.&nbsp;&nbsp;Returns&nbsp;the&nbsp;option&nbsp;values&nbsp;and&nbsp;leftover&nbsp;arguments<br>
+(possibly&nbsp;adjusted,&nbsp;possibly&nbsp;completely&nbsp;new&nbsp;--&nbsp;whatever&nbsp;you<br>
+like).&nbsp;&nbsp;Default&nbsp;implementation&nbsp;just&nbsp;returns&nbsp;the&nbsp;passed-in<br>
+values;&nbsp;subclasses&nbsp;may&nbsp;override&nbsp;as&nbsp;desired.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-destroy"><strong>destroy</strong></a>(self)</dt><dd><tt>Declare&nbsp;that&nbsp;you&nbsp;are&nbsp;done&nbsp;with&nbsp;this&nbsp;<a href="#OptionParser">OptionParser</a>.&nbsp;&nbsp;This&nbsp;cleans&nbsp;up<br>
+reference&nbsp;cycles&nbsp;so&nbsp;the&nbsp;<a href="#OptionParser">OptionParser</a>&nbsp;(and&nbsp;all&nbsp;objects&nbsp;referenced&nbsp;by<br>
+it)&nbsp;can&nbsp;be&nbsp;garbage-collected&nbsp;promptly.&nbsp;&nbsp;After&nbsp;calling&nbsp;<a href="#OptionParser-destroy">destroy</a>(),&nbsp;the<br>
+<a href="#OptionParser">OptionParser</a>&nbsp;is&nbsp;unusable.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-disable_interspersed_args"><strong>disable_interspersed_args</strong></a>(self)</dt><dd><tt>Set&nbsp;parsing&nbsp;to&nbsp;stop&nbsp;on&nbsp;the&nbsp;first&nbsp;non-option.&nbsp;Use&nbsp;this&nbsp;if<br>
+you&nbsp;have&nbsp;a&nbsp;command&nbsp;processor&nbsp;which&nbsp;runs&nbsp;another&nbsp;command&nbsp;that<br>
+has&nbsp;options&nbsp;of&nbsp;its&nbsp;own&nbsp;and&nbsp;you&nbsp;want&nbsp;to&nbsp;make&nbsp;sure&nbsp;these&nbsp;options<br>
+don't&nbsp;get&nbsp;confused.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-enable_interspersed_args"><strong>enable_interspersed_args</strong></a>(self)</dt><dd><tt>Set&nbsp;parsing&nbsp;to&nbsp;not&nbsp;stop&nbsp;on&nbsp;the&nbsp;first&nbsp;non-option,&nbsp;allowing<br>
+interspersing&nbsp;switches&nbsp;with&nbsp;command&nbsp;arguments.&nbsp;This&nbsp;is&nbsp;the<br>
+default&nbsp;behavior.&nbsp;See&nbsp;also&nbsp;<a href="#OptionParser-disable_interspersed_args">disable_interspersed_args</a>()&nbsp;and&nbsp;the<br>
+class&nbsp;documentation&nbsp;description&nbsp;of&nbsp;the&nbsp;attribute<br>
+allow_interspersed_args.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-error"><strong>error</strong></a>(self, msg)</dt><dd><tt><a href="#OptionParser-error">error</a>(msg&nbsp;:&nbsp;string)<br>
+&nbsp;<br>
+Print&nbsp;a&nbsp;usage&nbsp;message&nbsp;incorporating&nbsp;'msg'&nbsp;to&nbsp;stderr&nbsp;and&nbsp;exit.<br>
+If&nbsp;you&nbsp;override&nbsp;this&nbsp;in&nbsp;a&nbsp;subclass,&nbsp;it&nbsp;should&nbsp;not&nbsp;return&nbsp;--&nbsp;it<br>
+should&nbsp;either&nbsp;exit&nbsp;or&nbsp;raise&nbsp;an&nbsp;exception.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-exit"><strong>exit</strong></a>(self, status<font color="#909090">=0</font>, msg<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="OptionParser-expand_prog_name"><strong>expand_prog_name</strong></a>(self, s)</dt></dl>
+
+<dl><dt><a name="OptionParser-format_epilog"><strong>format_epilog</strong></a>(self, formatter)</dt></dl>
+
+<dl><dt><a name="OptionParser-format_help"><strong>format_help</strong></a>(self, formatter<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="OptionParser-format_option_help"><strong>format_option_help</strong></a>(self, formatter<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="OptionParser-get_default_values"><strong>get_default_values</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="OptionParser-get_description"><strong>get_description</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="OptionParser-get_option_group"><strong>get_option_group</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionParser-get_prog_name"><strong>get_prog_name</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="OptionParser-get_usage"><strong>get_usage</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="OptionParser-get_version"><strong>get_version</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="OptionParser-print_usage"><strong>print_usage</strong></a>(self, file<font color="#909090">=None</font>)</dt><dd><tt><a href="#OptionParser-print_usage">print_usage</a>(file&nbsp;:&nbsp;file&nbsp;=&nbsp;stdout)<br>
+&nbsp;<br>
+Print&nbsp;the&nbsp;usage&nbsp;message&nbsp;for&nbsp;the&nbsp;current&nbsp;program&nbsp;(self.<strong>usage</strong>)&nbsp;to<br>
+'file'&nbsp;(default&nbsp;stdout).&nbsp;&nbsp;Any&nbsp;occurrence&nbsp;of&nbsp;the&nbsp;string&nbsp;"%prog"&nbsp;in<br>
+self.<strong>usage</strong>&nbsp;is&nbsp;replaced&nbsp;with&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;current&nbsp;program<br>
+(basename&nbsp;of&nbsp;sys.argv[0]).&nbsp;&nbsp;Does&nbsp;nothing&nbsp;if&nbsp;self.<strong>usage</strong>&nbsp;is&nbsp;empty<br>
+or&nbsp;not&nbsp;defined.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-print_version"><strong>print_version</strong></a>(self, file<font color="#909090">=None</font>)</dt><dd><tt><a href="#OptionParser-print_version">print_version</a>(file&nbsp;:&nbsp;file&nbsp;=&nbsp;stdout)<br>
+&nbsp;<br>
+Print&nbsp;the&nbsp;version&nbsp;message&nbsp;for&nbsp;this&nbsp;program&nbsp;(self.<strong>version</strong>)&nbsp;to<br>
+'file'&nbsp;(default&nbsp;stdout).&nbsp;&nbsp;As&nbsp;with&nbsp;<a href="#OptionParser-print_usage">print_usage</a>(),&nbsp;any&nbsp;occurrence<br>
+of&nbsp;"%prog"&nbsp;in&nbsp;self.<strong>version</strong>&nbsp;is&nbsp;replaced&nbsp;by&nbsp;the&nbsp;current&nbsp;program's<br>
+name.&nbsp;&nbsp;Does&nbsp;nothing&nbsp;if&nbsp;self.<strong>version</strong>&nbsp;is&nbsp;empty&nbsp;or&nbsp;undefined.</tt></dd></dl>
+
+<dl><dt><a name="OptionParser-set_default"><strong>set_default</strong></a>(self, dest, value)</dt></dl>
+
+<dl><dt><a name="OptionParser-set_defaults"><strong>set_defaults</strong></a>(self, **kwargs)</dt></dl>
+
+<dl><dt><a name="OptionParser-set_process_default_values"><strong>set_process_default_values</strong></a>(self, process)</dt></dl>
+
+<dl><dt><a name="OptionParser-set_usage"><strong>set_usage</strong></a>(self, usage)</dt></dl>
+
+<hr>
+Data and other attributes inherited from <a href="optparse.html#OptionParser">optparse.OptionParser</a>:<br>
+<dl><dt><strong>standard_option_list</strong> = []</dl>
+
+<hr>
+Methods inherited from <a href="optparse.html#OptionContainer">optparse.OptionContainer</a>:<br>
+<dl><dt><a name="OptionParser-add_options"><strong>add_options</strong></a>(self, option_list)</dt></dl>
+
+<dl><dt><a name="OptionParser-format_description"><strong>format_description</strong></a>(self, formatter)</dt></dl>
+
+<dl><dt><a name="OptionParser-get_option"><strong>get_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionParser-has_option"><strong>has_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionParser-remove_option"><strong>remove_option</strong></a>(self, opt_str)</dt></dl>
+
+<dl><dt><a name="OptionParser-set_conflict_handler"><strong>set_conflict_handler</strong></a>(self, handler)</dt></dl>
+
+<dl><dt><a name="OptionParser-set_description"><strong>set_description</strong></a>(self, description)</dt></dl>
+
+<hr>
+Methods inherited from <a href="optparse2.html#OptionContainer">OptionContainer</a>:<br>
+<dl><dt><a name="OptionParser-get_option_by_name"><strong>get_option_by_name</strong></a>(self, name)</dt><dd><tt>Get&nbsp;option&nbsp;by&nbsp;option&nbsp;name.&nbsp;A&nbsp;little&nbsp;bit&nbsp;different&nbsp;than&nbsp;"get_option",<br>
+because&nbsp;it&nbsp;first&nbsp;checks&nbsp;"dest"&nbsp;before&nbsp;trying&nbsp;the&nbsp;option&nbsp;strings,&nbsp;and<br>
+also&nbsp;does&nbsp;not&nbsp;expect&nbsp;the&nbsp;dashes&nbsp;("-"&nbsp;or&nbsp;"--")&nbsp;when&nbsp;referencing&nbsp;the<br>
+option&nbsp;strings.</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__created__</strong> = '2012-05-17'<br>
+<strong>__modified__</strong> = '2013-02-06'</td></tr></table>
+</body></html>
