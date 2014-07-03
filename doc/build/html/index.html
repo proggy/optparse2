@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>optparse2 &mdash; optparse2 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="optparse2 0.1 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">optparse2 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="optparse2">
+<h1>optparse2<a class="headerlink" href="#optparse2" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<span class="target" id="module-optparse2"></span><p>Extension of the command line option parser from the module <em>optparse</em>,
+which was originally written by Gregory P. Ward.</p>
+<p>The most important changes are:</p>
+<ul class="simple">
+<li>information about the default values is automatically appended to the
+help strings of each option (if they do not already include the word
+&#8220;%default&#8221;)</li>
+<li>options and option groups are displayed in alphabetical order on the help
+page</li>
+<li>option string conflicts may not necessarily lead to an exception. First it
+is tried to move the option string to the new option (give it a new
+meaning), as long as at least one option string remains at the old option,
+thus overwriting the option string&#8217;s meaning</li>
+<li>pydoc.pager is now used to display the help (behavior similar to the bash
+command <em>less</em>)</li>
+<li>by default, the <em>help</em> and <em>version</em> options are moved to an option group
+called &#8220;General options&#8221;</li>
+<li>the <em>help</em> option does no longer have the short option string &#8220;-h&#8221;, but
+instead &#8220;-?&#8221;</li>
+<li>write <em>None</em> instead of <em>none</em> in default option value help string</li>
+<li>preserve linebreaks in description (still needs improvement)</li>
+</ul>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="optparse2.OptionContainer">
+<em class="property">class </em><tt class="descclassname">optparse2.</tt><tt class="descname">OptionContainer</tt><big>(</big><em>option_class</em>, <em>conflict_handler</em>, <em>description</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extended version of optparse.OptionContainer.</p>
+<dl class="method">
+<dt id="optparse2.OptionContainer.get_option_by_name">
+<tt class="descname">get_option_by_name</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionContainer.get_option_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionContainer.get_option_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get option by option name. A little bit different than
+<em>get_option()</em>, as it first checks <em>dest</em> before trying the option
+strings, and also does not expect the dashes (&#8220;-&#8221; or &#8220;&#8211;&#8221;) when
+referencing the option strings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionContainer.add_option">
+<tt class="descname">add_option</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionContainer.add_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionContainer.add_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Before calling the original method <em>add_option()</em>, this version
+checks if the same option strings (long and short) do already exist in
+another option definition. Instead of raising an exception rightaway,
+it tries to &#8220;overwrite&#8221; the meaning of the option string, i.e. the
+option string is deleted from the other option. However, this will only
+be done if this option string is not <em>the only one</em> defined by the
+other option, because at least one option string should persist for
+each option.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optparse2.OptionGroup">
+<em class="property">class </em><tt class="descclassname">optparse2.</tt><tt class="descname">OptionGroup</tt><big>(</big><em>parser</em>, <em>title</em>, <em>description=None</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just make sure the modified method <em>OptionContainer.add_option()</em> is
+used also by <em>OptionGroup</em> (monkey patch). Otherwise, the original class
+stays untouched.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="optparse2.OptionParser">
+<em class="property">class </em><tt class="descclassname">optparse2.</tt><tt class="descname">OptionParser</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Improved version of <em>optparse.OptionParser</em> that overwrites some of its
+methods and changes its behavior a little bit.</p>
+<dl class="method">
+<dt id="optparse2.OptionParser.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Improved version of the constructor. Sets the version string if the
+user has not done so himself, because an empty version string would
+lead to a bug lateron.  If the keyword argument <em>general</em> is set to
+<em>True</em>, move help and version options to the newly created option group
+&#8220;General options&#8221; (default: <em>True</em>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser.cmp_opts">
+<tt class="descname">cmp_opts</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.cmp_opts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.cmp_opts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare options by the first short option name or, if there is no
+short option name, by the first long option name. Needed for sorting
+the options.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser.print_help">
+<tt class="descname">print_help</tt><big>(</big><em>file=None</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.print_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.print_help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like the original, except it uses <em>pydoc.pager</em> to display the help
+text on the screen. The file argument no longer has any meaning, it
+just stays there for compatibility reasons. Also, the method now sorts
+all options and option groups before displaying the help text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser._add_help_option">
+<tt class="descname">_add_help_option</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser._add_help_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser._add_help_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like the original method, but does not define the short option
+string &#8220;-h&#8221;. Instead, defines a short option &#8220;-?&#8221;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser.add_all_default_values">
+<tt class="descname">add_all_default_values</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.add_all_default_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.add_all_default_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically append the default values to the help strings of all
+the options of this option parser. Those options that already contain
+the substring &#8220;%default&#8221; are skipped.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser._add_default_values">
+<tt class="descname">_add_default_values</tt><big>(</big><em>op</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser._add_default_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser._add_default_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically append information about the default values to the
+help string of the given option parser or option group object. Those
+options that already contain the substring &#8220;%default&#8221; are skipped.
+This method is used by <em>add_all_default_values()</em>, which is the one
+that should be called by the user. There should be no need for the user
+to call this method manually.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser.move_option">
+<tt class="descname">move_option</tt><big>(</big><em>name</em>, <em>destination</em>, <em>source=None</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.move_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.move_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move an already defined option from one option parser object to
+another.  By default, the source object is the option parser object
+itself, but can also be set to any option group object. Also the
+destination can be any option parser or option group object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser.parse_args">
+<tt class="descname">parse_args</tt><big>(</big><em>args=None</em>, <em>values=None</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.parse_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.parse_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does a little bit of extra stuff before calling the original method
+<em>parse_args()</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser.get_option_group_by_title">
+<tt class="descname">get_option_group_by_title</tt><big>(</big><em>title</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.get_option_group_by_title"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.get_option_group_by_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get option group by group title. It is sufficient that the group
+title starts with the given string. All strings are converted to lower
+case before comparison.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser.walk">
+<tt class="descname">walk</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.walk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return iterator over all options of the option parser, including
+those in option groups.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="optparse2.OptionParser.search_option">
+<tt class="descname">search_option</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#OptionParser.search_option"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.OptionParser.search_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search the whole option parser recursively (also in option groups)
+for an option by the given name. If no matching option is found, return
+<em>False</em>.  Otherwise, return reference to the option object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="optparse2.IndentedHelpFormatterWithNL">
+<em class="property">class </em><tt class="descclassname">optparse2.</tt><tt class="descname">IndentedHelpFormatterWithNL</tt><big>(</big><em>indent_increment=2</em>, <em>max_help_position=24</em>, <em>width=None</em>, <em>short_first=1</em><big>)</big><a class="reference internal" href="_modules/optparse2.html#IndentedHelpFormatterWithNL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#optparse2.IndentedHelpFormatterWithNL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve the problem that newline characters are erased in the docstring.</p>
+<p>Courtesy goes to Tim Chase:
+<a class="reference external" href="https://groups.google.com/forum/?fromgroups#!topic/comp.lang.python/bfbmtUGhW8I">https://groups.google.com/forum/?fromgroups#!topic/comp.lang.python/bfbmtUGhW8I</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">optparse2</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">optparse2 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Daniel Jung.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

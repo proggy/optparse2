@@ -53,32 +53,36 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-"""Extend the command line option parser from the module "optparse", which was
-originally written by Gregory P. Ward.
+"""Extension of the command line option parser from the module *optparse*,
+which was originally written by Gregory P. Ward.
 
 The most important changes are:
---> information about the default values is automatically appended to the
-    help strings of each option (if they do not already include the word
-    "%default")
---> options and option groups are displayed in alphabetical order on the help
-    page
---> option string conflicts may not necessarily lead to an exception. First it
-    is tried to move the option string to the new option (give it a new
-    meaning), as long as at least one option string remains at the old option
---> pydoc.pager is now used to display the help (similar behavior to the bash
-    command "less")
---> by default, the "help" and "version" options are moved to an option group
-    called "General options"
---> the "help" option does no longer have the short option string "-h", but
-    instead "-?"
---> write "None" instead of "none" in default option value help string
---> preserve linebreaks in description (could still be improved)
 
-To do:
---> only use pydoc.pager for showing help if the length of the help is
-    exceeding the terminal window height"""
+- information about the default values is automatically appended to the
+  help strings of each option (if they do not already include the word
+  "%default")
+- options and option groups are displayed in alphabetical order on the help
+  page
+- option string conflicts may not necessarily lead to an exception. First it
+  is tried to move the option string to the new option (give it a new
+  meaning), as long as at least one option string remains at the old option,
+  thus overwriting the option string's meaning
+- pydoc.pager is now used to display the help (behavior similar to the bash
+  command *less*)
+- by default, the *help* and *version* options are moved to an option group
+  called "General options"
+- the *help* option does no longer have the short option string "-h", but
+  instead "-?"
+- write *None* instead of *none* in default option value help string
+- preserve linebreaks in description (still needs improvement)"""
+#
+# To do:
+# --> only use pydoc.pager for showing help if the length of the help is
+#     exceeding the terminal window height
+#
 __created__ = '2012-05-17'
 __modified__ = '2013-02-06'
+
 import optparse
 import pydoc
 import textwrap
@@ -89,10 +93,10 @@ class OptionContainer(optparse.OptionContainer):
     # 2012-05-21 - 2012-05-23
 
     def get_option_by_name(self, name):
-        """Get option by option name. A little bit different than "get_option",
-        because it first checks "dest" before trying the option strings, and
-        also does not expect the dashes ("-" or "--") when referencing the
-        option strings."""
+        """Get option by option name. A little bit different than
+        *get_option()*, as it first checks *dest* before trying the option
+        strings, and also does not expect the dashes ("-" or "--") when
+        referencing the option strings."""
         # 2012-05-21 - 2012-05-21
 
         # check destinations
@@ -104,13 +108,14 @@ class OptionContainer(optparse.OptionContainer):
         return self._long_opt.get('--'+name) or self._short_opt.get('-'+name)
 
     def add_option(self, *args, **kwargs):
-        """Before calling the original method "add_option", this version checks
-        if the same option strings (long and short) do already exist in another
-        option definition. Instead of raising an exception rightaway, it tries
-        to "overwrite" the meaning of the option string, i.e. the option string
-        is deleted from the other option. However, this will only be done if
-        this option string is not the only one defined in the other option,
-        because at least one option string should persist for each option."""
+        """Before calling the original method *add_option()*, this version
+        checks if the same option strings (long and short) do already exist in
+        another option definition. Instead of raising an exception rightaway,
+        it tries to "overwrite" the meaning of the option string, i.e. the
+        option string is deleted from the other option. However, this will only
+        be done if this option string is not *the only one* defined by the
+        other option, because at least one option string should persist for
+        each option."""
         # 2012-05-23 - 2012-05-23
 
         # cycle all option strings of the new option
@@ -139,14 +144,15 @@ class OptionContainer(optparse.OptionContainer):
 
 
 class OptionGroup(optparse.OptionGroup, OptionContainer):
-    """Just make sure the modified method "OptionContainer.add_option" is used
-    also for "OptionGroup"."""
+    """Just make sure the modified method *OptionContainer.add_option()* is
+    used also by *OptionGroup* (monkey patch). Otherwise, the original class
+    stays untouched."""
     # 2012-05-23 - 2012-05-23
     add_option = OptionContainer.add_option
 
 
 class OptionParser(optparse.OptionParser, OptionContainer):
-    """My improved version of optparse.OptionParser that overwrites some of its
+    """Improved version of *optparse.OptionParser* that overwrites some of its
     methods and changes its behavior a little bit."""
     # 2012-05-17 - 2013-02-06
 
@@ -154,11 +160,11 @@ class OptionParser(optparse.OptionParser, OptionContainer):
     # former tb.MyOptionParser from 2011-08-03
 
     def __init__(self, *args, **kwargs):
-        """My version of the constructor. Sets the version string if the user
-        hasn't done that himself, because an empty version string would lead to
-        a bug lateron.  If the keyword argument "general" is set to True, move
-        help and version options to the newly created option group "General
-        options" (default: True)."""
+        """Improved version of the constructor. Sets the version string if the
+        user has not done so himself, because an empty version string would
+        lead to a bug lateron.  If the keyword argument *general* is set to
+        *True*, move help and version options to the newly created option group
+        "General options" (default: *True*)."""
         # 2012-05-17 - 2012-05-21
         # former hdp._MyOptionParser.__init__ from 2011-11-11
 
@@ -183,9 +189,9 @@ class OptionParser(optparse.OptionParser, OptionContainer):
             self.add_option_group(og)
 
     def cmp_opts(self, a, b):
-        """Compare options by first short option name or, if there is not short
-        option name, by first long option name. Needed for sorting the
-        options."""
+        """Compare options by the first short option name or, if there is no
+        short option name, by the first long option name. Needed for sorting
+        the options."""
         # 2012-05-17
         # former hdp._MyOptionParser.cmp_opts from 2011-08-03
         if len(a._short_opts) > 0:
@@ -204,10 +210,10 @@ class OptionParser(optparse.OptionParser, OptionContainer):
             return 1
 
     def print_help(self, file=None):
-        """Like the old one, except uses pydoc.pager to show the help on the
-        screen. The file argument no longer has any meaning, it just stays for
-        compatibility reasons. Also, the method now sorts all options and
-        option groups before displaying the help."""
+        """Like the original, except it uses *pydoc.pager* to display the help
+        text on the screen. The file argument no longer has any meaning, it
+        just stays there for compatibility reasons. Also, the method now sorts
+        all options and option groups before displaying the help text."""
         # 2012-05-17
         # former hdp._MyOptionParser.print_help from 2011-08-02 - 2011-12-19
         # How can line breaks be preserved in epilog and description? Maybe
@@ -228,7 +234,7 @@ class OptionParser(optparse.OptionParser, OptionContainer):
 
     def _add_help_option(self):
         """Like the original method, but does not define the short option
-        string "-h". Instead, defines "-?"."""
+        string "-h". Instead, defines a short option "-?"."""
         # 2012-05-17 - 2012-07-09
         # former hdp._MyOptionParser.print_help 2011-08-03
         self.add_option('-?', '--help', action='help',
@@ -247,9 +253,9 @@ class OptionParser(optparse.OptionParser, OptionContainer):
         """Automatically append information about the default values to the
         help string of the given option parser or option group object. Those
         options that already contain the substring "%default" are skipped.
-        This method is used by "add_all_default_values", which should be called
-        by the user. There should be no need for the user to call this method
-        manually."""
+        This method is used by *add_all_default_values()*, which is the one
+        that should be called by the user. There should be no need for the user
+        to call this method manually."""
         # 2012-05-18 - 2012-05-22
         # former hdp.BaseHDP.help_default from 2011-09-14
         # former tb.BaseProc.help_default from 2011-02-11
@@ -285,7 +291,7 @@ class OptionParser(optparse.OptionParser, OptionContainer):
 
     def parse_args(self, args=None, values=None):
         """Does a little bit of extra stuff before calling the original method
-        "parse_args"."""
+        *parse_args()*."""
         # 2012-05-21 - 2012-05-22
 
         # add the default values to all help strings
@@ -309,8 +315,8 @@ class OptionParser(optparse.OptionParser, OptionContainer):
         # then, only the true option names are allowed, i.e. option.dest
 
     def get_option_group_by_title(self, title):
-        """Get option group by group title. It is sufficient if the group title
-        is starting with the given string. All strings are converted to lower
+        """Get option group by group title. It is sufficient that the group
+        title starts with the given string. All strings are converted to lower
         case before comparison."""
         # 2012-05-21 - 2012-05-21
 
@@ -336,7 +342,7 @@ class OptionParser(optparse.OptionParser, OptionContainer):
     def search_option(self, name):
         """Search the whole option parser recursively (also in option groups)
         for an option by the given name. If no matching option is found, return
-        False.  Otherwise, return reference to the option object."""
+        *False*.  Otherwise, return reference to the option object."""
         # 2012-05-22 - 2012-05-22
         for option in self.walk():
             if option.dest and option.dest == name \
@@ -349,11 +355,11 @@ class OptionParser(optparse.OptionParser, OptionContainer):
     add_option = OptionContainer.add_option
 
 
-# solve the problem that newline characters are erased in the docstring
-# courtesy to Tim Chase
-# https://groups.google.com/forum/?fromgroups#!topic/comp.lang.python/
-# bfbmtUGhW8I
 class IndentedHelpFormatterWithNL(optparse.IndentedHelpFormatter):
+    """Solve the problem that newline characters are erased in the docstring.
+
+    Courtesy goes to Tim Chase:
+    https://groups.google.com/forum/?fromgroups#!topic/comp.lang.python/bfbmtUGhW8I"""
     __created__ = '2013-02-06'
     __modified__ = '2013-02-06'
 
