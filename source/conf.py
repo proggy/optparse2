@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # optparse2 documentation build configuration file, created by
-# sphinx-quickstart on Thu Jul  3 11:11:53 2014.
+# sphinx-quickstart on Thu Jul  3 11:38:01 2014.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
