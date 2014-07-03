@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>optparse2 &mdash; optparse2 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="optparse2 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">optparse2 0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for optparse2</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># Copyright notice</span>
+<span class="c"># ----------------</span>
+<span class="c">#</span>
+<span class="c"># Copyright (C) 2012-2014 Daniel Jung</span>
+<span class="c"># Contact: djungbremen@gmail.com</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or modify it</span>
+<span class="c"># under the terms of the GNU General Public License as published by the Free</span>
+<span class="c"># Software Foundation; either version 2 of the License, or (at your option)</span>
+<span class="c"># any later version.</span>
+<span class="c">#</span>
+<span class="c"># This program is distributed in the hope that it will be useful, but WITHOUT</span>
+<span class="c"># ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</span>
+<span class="c"># FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</span>
+<span class="c"># more details.</span>
+<span class="c">#</span>
+<span class="c"># You should have received a copy of the GNU General Public License along</span>
+<span class="c"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c"># 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.</span>
+<span class="c">#</span>
+<span class="c">#</span>
+<span class="c"># Original copyright statement by the authors of optparse</span>
+<span class="c"># =======================================================</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2001-2006 Gregory P. Ward.  All rights reserved.</span>
+<span class="c"># Copyright (c) 2002-2006 Python Software Foundation.  All rights reserved.</span>
+<span class="c">#</span>
+<span class="c"># Redistribution and use in source and binary forms, with or without</span>
+<span class="c"># modification, are permitted provided that the following conditions are met:</span>
+<span class="c">#</span>
+<span class="c"># * Redistributions of source code must retain the above copyright notice, this</span>
+<span class="c">#   list of conditions and the following disclaimer.</span>
+<span class="c">#</span>
+<span class="c"># * Redistributions in binary form must reproduce the above copyright notice,</span>
+<span class="c">#   this list of conditions and the following disclaimer in the documentation</span>
+<span class="c">#   and/or other materials provided with the distribution.</span>
+<span class="c">#</span>
+<span class="c"># * Neither the name of the author nor the names of its contributors may be</span>
+<span class="c">#   used to endorse or promote products derived from this software without</span>
+<span class="c">#   specific prior written permission.</span>
+<span class="c">#</span>
+<span class="c"># THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;</span>
+<span class="c"># AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span>
+<span class="c"># IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</span>
+<span class="c"># ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR</span>
+<span class="c"># ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span>
+<span class="c"># DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span>
+<span class="c"># SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</span>
+<span class="c"># CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</span>
+<span class="c"># OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span>
+<span class="c"># OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="c">#</span>
+<span class="sd">&quot;&quot;&quot;Extension of the command line option parser from the module *optparse*,</span>
+<span class="sd">which was originally written by Gregory P. Ward.</span>
+
+<span class="sd">The most important changes are:</span>
+
+<span class="sd">- information about the default values is automatically appended to the</span>
+<span class="sd">  help strings of each option (if they do not already include the word</span>
+<span class="sd">  &quot;%default&quot;)</span>
+<span class="sd">- options and option groups are displayed in alphabetical order on the help</span>
+<span class="sd">  page</span>
+<span class="sd">- option string conflicts may not necessarily lead to an exception. First it</span>
+<span class="sd">  is tried to move the option string to the new option (give it a new</span>
+<span class="sd">  meaning), as long as at least one option string remains at the old option,</span>
+<span class="sd">  thus overwriting the option string&#39;s meaning</span>
+<span class="sd">- pydoc.pager is now used to display the help (behavior similar to the bash</span>
+<span class="sd">  command *less*)</span>
+<span class="sd">- by default, the *help* and *version* options are moved to an option group</span>
+<span class="sd">  called &quot;General options&quot;</span>
+<span class="sd">- the *help* option does no longer have the short option string &quot;-h&quot;, but</span>
+<span class="sd">  instead &quot;-?&quot;</span>
+<span class="sd">- write *None* instead of *none* in default option value help string</span>
+<span class="sd">- preserve linebreaks in description (still needs improvement)&quot;&quot;&quot;</span>
+<span class="c">#</span>
+<span class="c"># To do:</span>
+<span class="c"># --&gt; only use pydoc.pager for showing help if the length of the help is</span>
+<span class="c">#     exceeding the terminal window height</span>
+<span class="c">#</span>
+<span class="n">__created__</span> <span class="o">=</span> <span class="s">&#39;2012-05-17&#39;</span>
+<span class="n">__modified__</span> <span class="o">=</span> <span class="s">&#39;2013-02-06&#39;</span>
+
+<span class="kn">import</span> <span class="nn">optparse</span>
+<span class="kn">import</span> <span class="nn">pydoc</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+
+
+<div class="viewcode-block" id="OptionContainer"><a class="viewcode-back" href="../index.html#optparse2.OptionContainer">[docs]</a><span class="k">class</span> <span class="nc">OptionContainer</span><span class="p">(</span><span class="n">optparse</span><span class="o">.</span><span class="n">OptionContainer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extended version of optparse.OptionContainer.&quot;&quot;&quot;</span>
+    <span class="c"># 2012-05-21 - 2012-05-23</span>
+
+<div class="viewcode-block" id="OptionContainer.get_option_by_name"><a class="viewcode-back" href="../index.html#optparse2.OptionContainer.get_option_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_option_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get option by option name. A little bit different than</span>
+<span class="sd">        *get_option()*, as it first checks *dest* before trying the option</span>
+<span class="sd">        strings, and also does not expect the dashes (&quot;-&quot; or &quot;--&quot;) when</span>
+<span class="sd">        referencing the option strings.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-21 - 2012-05-21</span>
+
+        <span class="c"># check destinations</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">option_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span> <span class="ow">and</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">option</span>
+
+        <span class="c"># try option strings</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;--&#39;</span><span class="o">+</span><span class="n">name</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="o">+</span><span class="n">name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OptionContainer.add_option"><a class="viewcode-back" href="../index.html#optparse2.OptionContainer.add_option">[docs]</a>    <span class="k">def</span> <span class="nf">add_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Before calling the original method *add_option()*, this version</span>
+<span class="sd">        checks if the same option strings (long and short) do already exist in</span>
+<span class="sd">        another option definition. Instead of raising an exception rightaway,</span>
+<span class="sd">        it tries to &quot;overwrite&quot; the meaning of the option string, i.e. the</span>
+<span class="sd">        option string is deleted from the other option. However, this will only</span>
+<span class="sd">        be done if this option string is not *the only one* defined by the</span>
+<span class="sd">        other option, because at least one option string should persist for</span>
+<span class="sd">        each option.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-23 - 2012-05-23</span>
+
+        <span class="c"># cycle all option strings of the new option</span>
+        <span class="k">for</span> <span class="n">optionstring</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="c"># check if this option string already exists in some option</span>
+            <span class="k">if</span> <span class="n">optionstring</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_opt</span><span class="p">:</span>
+                <span class="n">option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_opt</span><span class="p">[</span><span class="n">optionstring</span><span class="p">]</span>
+
+                <span class="c"># make sure it is not the only option string of this option</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">_short_opts</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">_long_opts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c"># delete this option string from the old option</span>
+                    <span class="n">option</span><span class="o">.</span><span class="n">_short_opts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">optionstring</span><span class="p">)</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_opt</span><span class="p">[</span><span class="n">optionstring</span><span class="p">]</span>
+
+            <span class="k">elif</span> <span class="n">optionstring</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_opt</span><span class="p">:</span>
+                <span class="n">option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_opt</span><span class="p">[</span><span class="n">optionstring</span><span class="p">]</span>
+
+                <span class="c"># make sure it is not the only option string of this option</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">_short_opts</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">option</span><span class="o">.</span><span class="n">_long_opts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c"># delete this option string from the oLegold option</span>
+                    <span class="n">option</span><span class="o">.</span><span class="n">_long_opts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">optionstring</span><span class="p">)</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_opt</span><span class="p">[</span><span class="n">optionstring</span><span class="p">]</span>
+
+        <span class="c"># finally, call the original method</span>
+        <span class="n">optparse</span><span class="o">.</span><span class="n">OptionContainer</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="OptionGroup"><a class="viewcode-back" href="../index.html#optparse2.OptionGroup">[docs]</a><span class="k">class</span> <span class="nc">OptionGroup</span><span class="p">(</span><span class="n">optparse</span><span class="o">.</span><span class="n">OptionGroup</span><span class="p">,</span> <span class="n">OptionContainer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Just make sure the modified method *OptionContainer.add_option()* is</span>
+<span class="sd">    used also by *OptionGroup* (monkey patch). Otherwise, the original class</span>
+<span class="sd">    stays untouched.&quot;&quot;&quot;</span>
+    <span class="c"># 2012-05-23 - 2012-05-23</span>
+    <span class="n">add_option</span> <span class="o">=</span> <span class="n">OptionContainer</span><span class="o">.</span><span class="n">add_option</span>
+
+</div>
+<div class="viewcode-block" id="OptionParser"><a class="viewcode-back" href="../index.html#optparse2.OptionParser">[docs]</a><span class="k">class</span> <span class="nc">OptionParser</span><span class="p">(</span><span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="p">,</span> <span class="n">OptionContainer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Improved version of *optparse.OptionParser* that overwrites some of its</span>
+<span class="sd">    methods and changes its behavior a little bit.&quot;&quot;&quot;</span>
+    <span class="c"># 2012-05-17 - 2013-02-06</span>
+
+    <span class="c"># former hdp._MyOptionParser from 2011-09-14 until 2011-12-19</span>
+    <span class="c"># former tb.MyOptionParser from 2011-08-03</span>
+
+<div class="viewcode-block" id="OptionParser.__init__"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Improved version of the constructor. Sets the version string if the</span>
+<span class="sd">        user has not done so himself, because an empty version string would</span>
+<span class="sd">        lead to a bug lateron.  If the keyword argument *general* is set to</span>
+<span class="sd">        *True*, move help and version options to the newly created option group</span>
+<span class="sd">        &quot;General options&quot; (default: *True*).&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-17 - 2012-05-21</span>
+        <span class="c"># former hdp._MyOptionParser.__init__ from 2011-11-11</span>
+
+        <span class="c"># make sure the keyword argument &quot;version&quot; is set to a non-empty string</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;version&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;formatter&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">formatter</span><span class="o">=</span><span class="n">IndentedHelpFormatterWithNL</span><span class="p">())</span>
+
+        <span class="c"># catch additional keyword arguments before calling the original method</span>
+        <span class="n">general</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;general&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+        <span class="c"># call original initialisation method</span>
+        <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c"># create an option group &quot;general options&quot; and move help and version</span>
+        <span class="c"># option there</span>
+        <span class="k">if</span> <span class="n">general</span><span class="p">:</span>
+            <span class="n">og</span> <span class="o">=</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;General options&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_option</span><span class="p">(</span><span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="n">og</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_option</span><span class="p">(</span><span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="n">og</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_option_group</span><span class="p">(</span><span class="n">og</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OptionParser.cmp_opts"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.cmp_opts">[docs]</a>    <span class="k">def</span> <span class="nf">cmp_opts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compare options by the first short option name or, if there is no</span>
+<span class="sd">        short option name, by the first long option name. Needed for sorting</span>
+<span class="sd">        the options.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-17</span>
+        <span class="c"># former hdp._MyOptionParser.cmp_opts from 2011-08-03</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">_short_opts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">aname</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">_short_opts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">aname</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">_long_opts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">_short_opts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">bname</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">_short_opts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bname</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">_long_opts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">aname</span> <span class="o">==</span> <span class="n">bname</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">aname</span> <span class="o">&lt;</span> <span class="n">bname</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+</div>
+<div class="viewcode-block" id="OptionParser.print_help"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.print_help">[docs]</a>    <span class="k">def</span> <span class="nf">print_help</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Like the original, except it uses *pydoc.pager* to display the help</span>
+<span class="sd">        text on the screen. The file argument no longer has any meaning, it</span>
+<span class="sd">        just stays there for compatibility reasons. Also, the method now sorts</span>
+<span class="sd">        all options and option groups before displaying the help text.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-17</span>
+        <span class="c"># former hdp._MyOptionParser.print_help from 2011-08-02 - 2011-12-19</span>
+        <span class="c"># How can line breaks be preserved in epilog and description? Maybe</span>
+        <span class="c"># look at the responsible mothod in optparse.OptionParser to get a hint</span>
+
+        <span class="c"># sort options (also within option groups, and groups themselves)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">option_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="nb">cmp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmp_opts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">option_groups</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="nb">cmp</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+                                <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">title</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="n">title</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">option_groups</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">option_groups</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="n">option_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="nb">cmp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmp_opts</span><span class="p">)</span>
+
+        <span class="c">#if file is None:</span>
+        <span class="c">#    file = _sys.stdout</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_encoding</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+        <span class="c">#file.write(self.format_help().encode(encoding, &quot;replace&quot;))</span>
+        <span class="n">pydoc</span><span class="o">.</span><span class="n">pager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_help</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">,</span> <span class="s">&#39;replace&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="OptionParser._add_help_option"><a class="viewcode-back" href="../index.html#optparse2.OptionParser._add_help_option">[docs]</a>    <span class="k">def</span> <span class="nf">_add_help_option</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Like the original method, but does not define the short option</span>
+<span class="sd">        string &quot;-h&quot;. Instead, defines a short option &quot;-?&quot;.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-17 - 2012-07-09</span>
+        <span class="c"># former hdp._MyOptionParser.print_help 2011-08-03</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&#39;-?&#39;</span><span class="p">,</span> <span class="s">&#39;--help&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;help&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;show this help message and exit&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OptionParser.add_all_default_values"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.add_all_default_values">[docs]</a>    <span class="k">def</span> <span class="nf">add_all_default_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Automatically append the default values to the help strings of all</span>
+<span class="sd">        the options of this option parser. Those options that already contain</span>
+<span class="sd">        the substring &quot;%default&quot; are skipped.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-18</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_default_values</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">og</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">option_groups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_default_values</span><span class="p">(</span><span class="n">og</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OptionParser._add_default_values"><a class="viewcode-back" href="../index.html#optparse2.OptionParser._add_default_values">[docs]</a>    <span class="k">def</span> <span class="nf">_add_default_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Automatically append information about the default values to the</span>
+<span class="sd">        help string of the given option parser or option group object. Those</span>
+<span class="sd">        options that already contain the substring &quot;%default&quot; are skipped.</span>
+<span class="sd">        This method is used by *add_all_default_values()*, which is the one</span>
+<span class="sd">        that should be called by the user. There should be no need for the user</span>
+<span class="sd">        to call this method manually.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-18 - 2012-05-22</span>
+        <span class="c"># former hdp.BaseHDP.help_default from 2011-09-14</span>
+        <span class="c"># former tb.BaseProc.help_default from 2011-02-11</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">op</span><span class="o">.</span><span class="n">option_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">help</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s">&#39;</span><span class="si">%d</span><span class="s">efault&#39;</span> <span class="ow">in</span> <span class="n">o</span><span class="o">.</span><span class="n">help</span> <span class="ow">and</span> <span class="n">o</span><span class="o">.</span><span class="n">action</span> <span class="o">==</span> <span class="s">&#39;store&#39;</span> \
+                    <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">default</span><span class="p">)</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+                <span class="c"># then append the information to the help string</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">o</span><span class="o">.</span><span class="n">help</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="s">&#39;.!&#39;</span><span class="p">:</span>
+                    <span class="n">o</span><span class="o">.</span><span class="n">help</span> <span class="o">+=</span> <span class="s">&#39;.&#39;</span>
+                <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">help</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39; &#39;</span><span class="p">:</span>
+                    <span class="n">o</span><span class="o">.</span><span class="n">help</span> <span class="o">+=</span> <span class="s">&#39; &#39;</span>
+                <span class="n">o</span><span class="o">.</span><span class="n">help</span> <span class="o">+=</span> <span class="s">&#39;Default: </span><span class="si">%d</span><span class="s">efault&#39;</span>
+</div>
+<div class="viewcode-block" id="OptionParser.move_option"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.move_option">[docs]</a>    <span class="k">def</span> <span class="nf">move_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Move an already defined option from one option parser object to</span>
+<span class="sd">        another.  By default, the source object is the option parser object</span>
+<span class="sd">        itself, but can also be set to any option group object. Also the</span>
+<span class="sd">        destination can be any option parser or option group object.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-18 - 2012-05-21</span>
+
+        <span class="c"># set source to this option parser object by default</span>
+        <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="c"># search for the given option name, remember its index</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">option_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_option_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&#39;option &quot;</span><span class="si">%s</span><span class="s">&quot; not found&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="c"># move option object to new location</span>
+        <span class="n">destination</span><span class="o">.</span><span class="n">option_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">option_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="OptionParser.parse_args"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.parse_args">[docs]</a>    <span class="k">def</span> <span class="nf">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Does a little bit of extra stuff before calling the original method</span>
+<span class="sd">        *parse_args()*.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-21 - 2012-05-22</span>
+
+        <span class="c"># add the default values to all help strings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_all_default_values</span><span class="p">()</span>
+
+        <span class="c"># make sure line breaks are respected in epilog and description</span>
+        <span class="c">#self.epilog = &#39;\n&#39;.join([s.strip() for s in self.epilog.split(&#39;\n&#39;)])</span>
+        <span class="c">#self.description = &#39;\n&#39;.join([s.strip() \</span>
+                                    <span class="c">#for s in self.description.split(&#39;\n&#39;)])</span>
+        <span class="c"># How can line breaks be preserved in epilog and description? Maybe</span>
+        <span class="c"># look at the responsible mothod in optparse.OptionParser to get a hint</span>
+
+        <span class="c"># call original method</span>
+        <span class="k">return</span> <span class="n">optparse</span><span class="o">.</span><span class="n">OptionParser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+
+        <span class="c"># next thing will be to create an argument &quot;dictionary&quot; (or similar) to</span>
+        <span class="c"># feed the Values instance with extra values again, recall &quot;dest&quot; or</span>
+        <span class="c"># long or short option strings substitute kw2op with something more</span>
+        <span class="c"># reasonable I think this can already be done with the argument</span>
+        <span class="c"># &quot;values&quot; probably just say &quot;values=optparse.Values(dictionary)&quot; but</span>
+        <span class="c"># then, only the true option names are allowed, i.e. option.dest</span>
+</div>
+<div class="viewcode-block" id="OptionParser.get_option_group_by_title"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.get_option_group_by_title">[docs]</a>    <span class="k">def</span> <span class="nf">get_option_group_by_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get option group by group title. It is sufficient that the group</span>
+<span class="sd">        title starts with the given string. All strings are converted to lower</span>
+<span class="sd">        case before comparison.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-21 - 2012-05-21</span>
+
+        <span class="c"># check all groups</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">option_groups</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">title</span><span class="o">.</span><span class="n">lower</span><span class="p">()):</span>
+                <span class="k">return</span> <span class="n">group</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&#39;option group </span><span class="si">%s</span><span class="s"> not found&#39;</span> <span class="o">%</span> <span class="n">title</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OptionParser.walk"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.walk">[docs]</a>    <span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return iterator over all options of the option parser, including</span>
+<span class="sd">        those in option groups.&quot;&quot;&quot;</span>
+        <span class="c">### already exists by the name _get_all_options (but it is not an</span>
+        <span class="c">### iterator)</span>
+        <span class="c"># 2012-05-22 - 2012-05-22</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">option_list</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">option</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">option_groups</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">option_list</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">option</span>
+</div>
+<div class="viewcode-block" id="OptionParser.search_option"><a class="viewcode-back" href="../index.html#optparse2.OptionParser.search_option">[docs]</a>    <span class="k">def</span> <span class="nf">search_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Search the whole option parser recursively (also in option groups)</span>
+<span class="sd">        for an option by the given name. If no matching option is found, return</span>
+<span class="sd">        *False*.  Otherwise, return reference to the option object.&quot;&quot;&quot;</span>
+        <span class="c"># 2012-05-22 - 2012-05-22</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span> <span class="ow">and</span> <span class="n">option</span><span class="o">.</span><span class="n">dest</span> <span class="o">==</span> <span class="n">name</span> \
+                    <span class="ow">or</span> <span class="s">&#39;--&#39;</span><span class="o">+</span><span class="n">name</span> <span class="ow">in</span> <span class="n">option</span><span class="o">.</span><span class="n">_long_opts</span> \
+                    <span class="ow">or</span> <span class="s">&#39;-&#39;</span><span class="o">+</span><span class="n">name</span> <span class="ow">in</span> <span class="n">option</span><span class="o">.</span><span class="n">_short_opts</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">option</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+</div>
+    <span class="n">add_option</span> <span class="o">=</span> <span class="n">OptionContainer</span><span class="o">.</span><span class="n">add_option</span>
+
+</div>
+<div class="viewcode-block" id="IndentedHelpFormatterWithNL"><a class="viewcode-back" href="../index.html#optparse2.IndentedHelpFormatterWithNL">[docs]</a><span class="k">class</span> <span class="nc">IndentedHelpFormatterWithNL</span><span class="p">(</span><span class="n">optparse</span><span class="o">.</span><span class="n">IndentedHelpFormatter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Solve the problem that newline characters are erased in the docstring.</span>
+
+<span class="sd">    Courtesy goes to Tim Chase:</span>
+<span class="sd">    https://groups.google.com/forum/?fromgroups#!topic/comp.lang.python/bfbmtUGhW8I&quot;&quot;&quot;</span>
+    <span class="n">__created__</span> <span class="o">=</span> <span class="s">&#39;2013-02-06&#39;</span>
+    <span class="n">__modified__</span> <span class="o">=</span> <span class="s">&#39;2013-02-06&#39;</span>
+
+    <span class="n">NO_DEFAULT_VALUE</span> <span class="o">=</span> <span class="s">&#39;None&#39;</span>
+
+    <span class="k">def</span> <span class="nf">format_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">description</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&#39;&#39;</span>
+        <span class="n">desc_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_indent</span>
+        <span class="n">indent</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">current_indent</span>
+        <span class="c"># the above is still the same</span>
+        <span class="n">bits</span> <span class="o">=</span> <span class="n">description</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">formatted_bits</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">bit</span><span class="p">,</span> <span class="n">desc_width</span><span class="p">,</span> <span class="n">initial_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">,</span>
+                          <span class="n">subsequent_indent</span><span class="o">=</span><span class="n">indent</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="n">bits</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted_bits</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">format_option</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+        <span class="c"># The help for each option consists of two parts:</span>
+        <span class="c">#   * the opt strings and metavars</span>
+        <span class="c">#   eg. (&quot;-x&quot;, or &quot;-fFILENAME, --file=FILENAME&quot;)</span>
+        <span class="c">#   * the user-supplied help string</span>
+        <span class="c">#   eg. (&quot;turn on expert mode&quot;, &quot;read data from FILENAME&quot;)</span>
+        <span class="c">#</span>
+        <span class="c"># If possible, we write both of these on the same line:</span>
+        <span class="c">#   -x    turn on expert mode</span>
+        <span class="c">#</span>
+        <span class="c"># But if the opt string list is too long, we put the help</span>
+        <span class="c"># string on a second line, indented to the same column it would</span>
+        <span class="c"># start in if it fit on the first line.</span>
+        <span class="c">#   -fFILENAME, --file=FILENAME</span>
+        <span class="c">#       read data from FILENAME</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">option_strings</span><span class="p">[</span><span class="n">option</span><span class="p">]</span>
+        <span class="n">opt_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">help_position</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_indent</span> <span class="o">-</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">opt_width</span><span class="p">:</span>
+            <span class="n">opts</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%*s%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_indent</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+            <span class="n">indent_first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">help_position</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c"># start help on same line as opts</span>
+            <span class="n">opts</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%*s%-*s</span><span class="s">  &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_indent</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">opt_width</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+            <span class="n">indent_first</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">help</span><span class="p">:</span>
+            <span class="n">help_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_default</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+        <span class="c"># everything is the same up through here</span>
+            <span class="n">help_lines</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">para</span> <span class="ow">in</span> <span class="n">help_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">):</span>
+                <span class="n">help_lines</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">help_width</span><span class="p">))</span>
+        <span class="c"># everything is the same after here</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%*s%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">indent_first</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">help_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s">&quot;</span><span class="si">%*s%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">help_position</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+                           <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">help_lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span>
+        <span class="k">elif</span> <span class="n">opts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">optparse2 0.1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Daniel Jung.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

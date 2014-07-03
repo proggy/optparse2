@@ -1,9 +1,8 @@
 optparse2
 =========
 
-Extend the command line option parser from the module "optparse", which was
-originally written by Gregory P. Ward.
-
+Extension of the command line option parser from the module "optparse", which
+was originally written by Gregory P. Ward.
 
 
 Copyright notice
